@@ -1,0 +1,44 @@
+{% extends 'rango/base.html' %}
+{% block content %}
+<h1>Manage your domains</h1>
+<h3>Your domains</h3>
+<ul>
+	{% for domain in plans %}
+	<li>{{ domain }}</li>
+	{% endfor %}
+</ul>
+<h3>Nameservers</h3>
+<ul>
+	<li>ns1.digitalocean.com</li>
+	<li>ns2.digitalocean.com</li>
+	<li>ns3.digitalocean.com</li>
+</ul>
+<h3>Ftp information</h3>
+<ul>
+	<li><p>Ftp ip is: localhost port 80</p></li>
+	<li><p>Your ftp account is: {{ username }}</p></li>
+	<li><p>Your ftp password is hidden, if you forgot it you can reset it below. This can only be done once a day</p></li>
+	<a href="/reset_ftp_password"><button>Reset ftp password</button></a>
+	<li><p>You don't have an ftp account, please add a domain first!</p></li>
+</ul>
+
+
+<form id="category_form" method="post" action="/manage/">
+
+{% if error != None %}
+<h2>{{ error }}</h2>
+{% endif %}
+
+{% csrf_token %}
+{% for hidden in form.hidden_fields %}
+    {{ hidden }}
+{% endfor %}
+
+{% for field in form.visible_fields %}
+    {{ field.errors }}
+    {{ field.help_text }}
+    {{ field }}
+{% endfor %}
+
+<input type="submit" name="submit" value="Delete domain" />
+{% endblock %}

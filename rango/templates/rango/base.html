@@ -1,0 +1,40 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CoffeClouds</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    </head>
+
+    <body>
+    	<div class="header">
+    		<nav>
+    			<ul>
+                    <li><a href="/">Home</a></li>
+    				<li><a href="/about/">About</a></li>
+    				{% if user.is_authenticated %}
+                    <li><a href="/add_domain/">Add Domain</a></li>
+                    <li><a href="/manage/">Manage</a></li>
+					<li><a href="/logout/">Logout</a></li>
+					{% else %}
+					<li><a href="/register/">Register</a></li>
+					<li><a href="/login/">Login</a></li>
+					{% endif %}
+    			</ul>
+
+                {% if user.is_authenticated %}
+                <h4>You're logged in as {{ user.username }}</h4>
+                {% else %}
+                <h4>Please login</h4>
+                {% endif %}
+
+    		</nav>
+    	</div>
+
+		<div class="container">
+        {% block content %}
+
+        {% endblock %}
+        </div>
+    </body>
+</html>
